@@ -1,0 +1,8 @@
+========= FACTURA =========
+Fecha: 2026-03-16T18:11:23.471514100
+Laptop | Cantidad: 1 | Precio: 800.0 | Total: 800.0
+Mouse | Cantidad: 3 | Precio: 25.0 | Total: 75.0
+----------------------------
+Subtotal: 875.0
+IVA (13%): 113.75
+TOTAL: 988.75
