@@ -1,8 +1,0 @@
-========= FACTURA =========
-Laptop | Cantidad: 1 | Precio: 800.0 | Total: 800.0
-Mouse | Cantidad: 1 | Precio: 25.0 | Total: 25.0
-Teclado | Cantidad: 1 | Precio: 50.0 | Total: 50.0
------------------------------
-Subtotal: 875.0
-IVA (13%): 113.75
-TOTAL: 988.75
