@@ -20,7 +20,7 @@ class Factura {
         val lineaFina = "-".repeat(40)
 
         contenido.append("$linea\n")
-        contenido.append("         FACTURA DE COMPRA\n")
+        contenido.append("         FACTURA GUANACOTECH\n")
         contenido.append("$linea\n")
         contenido.append("Fecha : $fechaVoucher\n")
         contenido.append("$lineaFina\n")
