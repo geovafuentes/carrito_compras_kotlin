@@ -13,7 +13,7 @@ object EmailService {
     private val remitente = "proyectosudb.dsm2026@gmail.com"
     private val password = "jbqu pfey busr efwq"
 
-    fun enviarFactura(correo: String, contenido: String) {
+    fun enviarEmail(correo: String, contenido: String, emailSubject: String) {
         if (correo == remitente || correo.isBlank() || contenido.isBlank()) {
             println("Cliente no solicito factura")
         }else {
@@ -33,12 +33,11 @@ object EmailService {
                 val mensaje = MimeMessage(session).apply {
                     setFrom(InternetAddress(remitente))
                     setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo))
-                    subject = "Tu factura de compra UDB"
+                    subject = emailSubject
                     setText(contenido)
                 }
 
                 Transport.send(mensaje)
-                println("Correo enviado a $correo")
             } catch (e: Exception) {
                 println("Ocurrió un error no hemos podido enviarte el correo con tu factura.")
                 Logger.logError(e.message ?: "Error desconocido!!")

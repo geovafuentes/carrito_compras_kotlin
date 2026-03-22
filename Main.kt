@@ -164,12 +164,44 @@ fun main() {
                         println("El carrito está vacío, no puedes finalizar una compra sin productos")
                     } else {
                         val infoFactura = factura.generar(carrito)
-                        println("Ingrese correo:")
+                        println("Ingrese el correo electronico:")
                         val correo = readlnOrNull() ?: ""
 
-                        EmailService.enviarFactura(correo, infoFactura)
+                        val limiteTiempoMs = 2 * 60 * 1000
+                        var compraExitosa = false
 
-                        carrito.vaciar()
+                        while (!compraExitosa) {
+                            val code = codeGenerator()
+                            val tiempoGeneracion = System.currentTimeMillis()
+
+                            println("Se ha enviado un código de verificación de compra al correo electrónico.")
+                            EmailService.enviarEmail(correo, "Tu código de verificación de compra es: \n$code", "Código de verificación de compra GUANACOTECH")
+
+                            var codigoExpiro = false
+
+                            while (!compraExitosa && !codigoExpiro) {
+                                println("Por favor ingrese el código de verificación:")
+                                val codigoIngresado = readlnOrNull() ?: ""
+
+                                val tiempoActual = System.currentTimeMillis()
+                                val tiempoTranscurrido = tiempoActual - tiempoGeneracion
+
+                                if (tiempoTranscurrido > limiteTiempoMs) {
+                                    println("Error: El código ha expirado (han pasado más de 2 minutos).")
+                                    println("Generando y enviando un nuevo código...\n")
+                                    codigoExpiro = true
+                                } else if (codigoIngresado == code) {
+                                    println("Compra verificada exitosamente.")
+                                    EmailService.enviarEmail(correo, infoFactura, "Factura de compra GUANACOTECH")
+                                    println("Factura enviada al correo: $correo" )
+                                    carrito.vaciar()
+                                    compraExitosa = true
+                                } else {
+                                    val segundosRestantes = (limiteTiempoMs - tiempoTranscurrido) / 1000
+                                    println("Error: El código ingresado es incorrecto. Te quedan $segundosRestantes segundos para intentarlo de nuevo.\n")
+                                }
+                            }
+                        }
                     }
                 }
                 6 -> {
@@ -188,3 +220,5 @@ fun main() {
         }
     }
 }
+
+fun codeGenerator() = (100000..999999).random().toString()
